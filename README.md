@@ -4,6 +4,11 @@ An **AI-powered interactive learning platform** that connects users with three u
 This project combines **AI, WebRTC communication, and realistic avatars** to create an engaging, voice-enabled study experience.
 
 ---
+## 🎥 Project Demo
+
+[![Watch the video](https://img.youtube.com/vi/HJF6F41vtAw/0.jpg)](https://youtu.be/HJF6F41vtAw)
+
+🔗 **Live Deployment:** [hackathon-yo-learn.vercel.app](https://hackathon-yo-learn.vercel.app/)
 
 ##  Overview
 
