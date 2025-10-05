@@ -100,6 +100,9 @@ export default function DashboardPage() {
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             className="w-full px-6 py-4 text-lg rounded-2xl border-0 bg-white/10 backdrop-blur-sm text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-300"
+            suppressHydrationWarning={true}
+            autoComplete="off"
+            data-form-type="other"
           />
         </div>
       </div>
@@ -159,6 +162,7 @@ export default function DashboardPage() {
               <button
                 onClick={() => handleStartSession(companion.id)}
                 className={`w-full bg-gradient-to-r ${companion.color} hover:shadow-lg hover:shadow-purple-500/25 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 group-hover:shadow-xl`}
+                suppressHydrationWarning={true}
               >
                 <span className="flex items-center justify-center gap-2">
                   <span>Start Learning</span>
