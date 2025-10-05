@@ -2,6 +2,14 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 
+// Type declaration for SpeechRecognition
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
+
 interface StudyChatInterfaceProps {
   roomId: string;
   digitalHumanId: string;
@@ -37,7 +45,7 @@ export default function StudyChatInterface({
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
   // Auto-scroll to bottom when new messages arrive
@@ -55,13 +63,13 @@ export default function StudyChatInterface({
         recognitionRef.current.interimResults = false;
         recognitionRef.current.lang = 'en-US';
 
-        recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+        recognitionRef.current.onresult = (event: any) => {
           const transcript = event.results[0][0].transcript;
           setInputText(transcript);
           setIsListening(false);
         };
 
-        recognitionRef.current.onerror = (event: SpeechRecognitionErrorEvent) => {
+        recognitionRef.current.onerror = (event: any) => {
           console.error('Speech recognition error:', event.error);
           setIsListening(false);
         };
