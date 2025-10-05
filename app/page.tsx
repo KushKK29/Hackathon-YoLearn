@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 // Enhanced companion data with study focus
 const studyCompanions = [
@@ -93,7 +92,7 @@ export default function DashboardPage() {
         {/* Name Input */}
         <div className="max-w-md mx-auto mb-12">
           <label className="block text-lg font-semibold text-white mb-4">
-            What's your name?
+            What&apos;s your name?
           </label>
           <input
             type="text"

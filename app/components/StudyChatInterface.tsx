@@ -10,6 +10,14 @@ declare global {
   }
 }
 
+interface SpeechRecognitionEvent {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionErrorEvent {
+  error: string;
+}
+
 interface StudyChatInterfaceProps {
   roomId: string;
   digitalHumanId: string;
@@ -56,20 +64,20 @@ export default function StudyChatInterface({
   // Initialize speech recognition
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (SpeechRecognition) {
         recognitionRef.current = new SpeechRecognition();
         recognitionRef.current.continuous = false;
         recognitionRef.current.interimResults = false;
         recognitionRef.current.lang = 'en-US';
 
-        recognitionRef.current.onresult = (event: any) => {
+        recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
           const transcript = event.results[0][0].transcript;
           setInputText(transcript);
           setIsListening(false);
         };
 
-        recognitionRef.current.onerror = (event: any) => {
+        recognitionRef.current.onerror = (event: SpeechRecognitionErrorEvent) => {
           console.error('Speech recognition error:', event.error);
           setIsListening(false);
         };

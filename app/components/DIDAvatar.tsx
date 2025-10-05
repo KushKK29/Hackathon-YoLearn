@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface DIDAvatarProps {
   companionId: string;
@@ -11,25 +11,13 @@ interface DIDAvatarProps {
 }
 const avatar1 = "/Ai_Video.mp4";
 export default function DIDAvatar({ 
-  companionId, 
+  companionId: _companionId, 
   companionName, 
   subject, 
   isVisible, 
   onToggle 
 }: DIDAvatarProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Video URLs for different companions
-  const companionVideos = {
-    'companion-1-luna': avatar1,
-    'companion-2-rex': avatar1,
-    'companion-3-nova': avatar1
-  };
-
-  // Get the video URL for the current companion
-  const getVideoUrl = () => {
-    return companionVideos[companionId as keyof typeof companionVideos] || companionVideos['companion-1-luna'];
-  };
 
   // Auto-play video when component becomes visible
   useEffect(() => {
@@ -49,10 +37,11 @@ export default function DIDAvatar({
   // Cleanup video when component unmounts
   useEffect(() => {
     return () => {
-      if (videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.src = '';
-        videoRef.current.load();
+      const videoElement = videoRef.current;
+      if (videoElement) {
+        videoElement.pause();
+        videoElement.src = '';
+        videoElement.load();
       }
     };
   }, []);

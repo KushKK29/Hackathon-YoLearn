@@ -25,7 +25,6 @@ function VideoCall({ userName, roomID, onLeave }: VideoCallProps) {
   const [companionName, setCompanionName] = useState<string>('');
   const [companionId, setCompanionId] = useState<string>('');
   const [subject, setSubject] = useState<string>('');
-  const [userId, setUserId] = useState<string>('');
 
   // Update the ref when onLeave changes
   useEffect(() => {
@@ -52,7 +51,6 @@ function VideoCall({ userName, roomID, onLeave }: VideoCallProps) {
         const storedUserID = localStorage.getItem('userID');
         const userID = storedUserID || userName.replace(/\s/g, '_').toLowerCase() + `_${Date.now()}`;
         localStorage.setItem('userID', userID);
-        setUserId(userID);
 
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
           APP_ID,
