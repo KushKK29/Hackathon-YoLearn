@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#  AI Study Companions – Interactive Learning Platform with Real-Time AI Avatars
 
-## Getting Started
+An **AI-powered interactive learning platform** that connects users with three unique study companions — each specializing in different fields.  
+This project combines **AI, WebRTC communication, and realistic avatars** to create an engaging, voice-enabled study experience.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+##  Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The **AI Study Companions** platform offers real-time interaction with intelligent AI avatars that teach, guide, and explain concepts dynamically.  
+Each companion is tailored to a specific domain, providing focused and immersive learning sessions.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Companion | Domain | Description |
+|------------|--------|-------------|
+| **Luna** | Mindfulness & History | A calm and insightful AI that teaches mindfulness, meditation, and historical topics. |
+| **Rex** | Science & Health | A fitness-oriented and science-savvy AI companion guiding you through biological and health-related concepts. |
+| **Nova** | Technology & Programming | A futuristic AI specializing in coding, AI & ML, and web development guidance. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+##  Project Objective
 
-To learn more about Next.js, take a look at the following resources:
+- Build a **personalized learning environment** with domain-focused AI mentors.  
+- Facilitate **natural, voice-enabled conversations** between learners and AI companions.  
+- Implement **real-time interaction** using WebRTC and FastAPI WebSockets.  
+- Leverage **LangChain, LangGraph, and RAG** for intelligent, context-aware responses.  
+- Use **DID API avatars** for visual engagement and voice-driven answers.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ⚙️ Features
 
-## Deploy on Vercel
+-  **Multiple AI Companions:** Choose between Luna, Rex, and Nova based on your study goals.  
+-  **Real-Time Conversation:** Interact with companions through text and voice.  
+-  **AI Avatar Animation:** DID API brings each companion to life with realistic expressions.  
+-  **Speech Integration:** AI replies vocally using Text-to-Speech for an immersive learning flow.  
+-  **Smart Reasoning:** Powered by **LangChain**, **LangGraph**, and **RAG** for accurate, contextual answers.  
+-  **Modern UI:** Beautifully designed using **Tailwind CSS**.  
+-  **Deployed on Vercel:** Fast and reliable web access for users globally.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+##  Tech Stack
+
+| **Category** | **Technology** |
+|---------------|----------------|
+| **Frontend** | React.js, Tailwind CSS |
+| **Backend** | FastAPI, WebSockets |
+| **Communication** | WebRTC |
+| **AI Engine** | LangChain, LangGraph, RAG |
+| **Avatar API** | DID API |
+| **Voice Output** | Text-to-Speech Integration |
+| **Deployment** | Vercel |
+
+---
+
+##  Workflow
+
+1. **User Selection:** Choose a study companion (Luna, Rex, or Nova).  
+2. **Session Initialization:** A real-time interactive environment is launched.  
+3. **Interaction:** Users ask questions via voice or text.  
+4. **AI Processing:**  
+   - Query is processed using **LangChain + LangGraph + RAG**.  
+   - Context-aware responses are generated.  
+5. **Avatar Response:**  
+   - DID API animates the AI avatar.  
+   - Voice output delivers the response audibly.  
+6. **Continuous Context:** The AI maintains conversation memory for smoother learning.
+
+---
+
+##  Project Demonstration
+
+ 
+
+ **Live Deployment:**  
+> [Visit the Live App](https://hackathon-yo-learn.vercel.app/)
+
+---
+
+##  Current Progress
+
+ Implemented:
+- Multi-companion system  
+- WebRTC-based communication  
+- DID avatar integration  
+- Voice output for responses  
+- AI reasoning with LangChain, LangGraph, and RAG  
+
