@@ -26,3 +26,4 @@ export const ZEGO_CONFIG = {
   APP_ID: 293628284,
   SERVER_SECRET: process.env.NEXT_PUBLIC_ZEGO_SERVER_SECRET || "7ef5ad0e5bb3b97fb13ff842d1122837",
 };
+

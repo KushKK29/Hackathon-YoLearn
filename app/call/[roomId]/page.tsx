@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import DIDAvatar from '../../components/DIDAvatar';
 
 // --- Embedded VideoCall Component ---
 // This component encapsulates all ZegoCloud logic.
@@ -12,57 +13,19 @@ interface VideoCallProps {
 }
 console.log('call caller page');
 
-// Function to spawn digital human AI
-async function spawnDigitalHuman(roomID: string) {
-  try {
-    // Get the selected companion from localStorage
-    const selectedCompanion = localStorage.getItem('selectedCompanion');
-    console.log('Spawning digital human for companion:', selectedCompanion, 'in room:', roomID);
-    
-    // Map companions to their digital human IDs
-    const companionToDigitalHuman: { [key: string]: string } = {
-      'companion-1-luna': 'dh_luna_01',
-      'companion-2-rex': 'dh_rex_01', 
-      'companion-3-nova': 'dh_nova_01'
-    };
-
-    const digitalHumanId = companionToDigitalHuman[selectedCompanion || 'companion-1-luna'];
-    console.log('Using digital human ID:', digitalHumanId);
-    
-    // Call our backend API to spawn the digital human
-    const response = await fetch('/api/spawnDigitalHuman', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        roomId: roomID,
-        digitalHumanId: digitalHumanId,
-        companionId: selectedCompanion
-      }),
-    });
-
-    console.log('API response status:', response.status);
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log('Digital human spawned successfully!', result);
-    } else {
-      const errorText = await response.text();
-      console.error('Failed to spawn digital human:', errorText);
-    }
-  } catch (error) {
-    console.error('Error spawning digital human:', error);
-    // For now, just log the error but don't break the video call
-    console.log('Continuing with video call without digital human...');
-  }
-}
 
 function VideoCall({ userName, roomID, onLeave }: VideoCallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasInitialized = useRef(false);
   const zpRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const onLeaveRef = useRef(onLeave);
+  
+  // Avatar state
+  const [showDIDAvatar, setShowDIDAvatar] = useState(false);
+  const [companionName, setCompanionName] = useState<string>('');
+  const [companionId, setCompanionId] = useState<string>('');
+  const [subject, setSubject] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
 
   // Update the ref when onLeave changes
   useEffect(() => {
@@ -73,48 +36,77 @@ function VideoCall({ userName, roomID, onLeave }: VideoCallProps) {
     if (hasInitialized.current || !containerRef.current) return;
     hasInitialized.current = true;
 
-    import('@zegocloud/zego-uikit-prebuilt').then(({ ZegoUIKitPrebuilt }) => {
-      const APP_ID = 293628284;
-      const SERVER_SECRET = process.env.NEXT_PUBLIC_ZEGO_SERVER_SECRET || "7ef5ad0e5bb3b97fb13ff842d1122837";
+    const initializeVideoCall = async () => {
+      try {
+        // Import ZegoUIKit
+        const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
 
-      if (!APP_ID || !SERVER_SECRET) {
-        console.error("ZegoCloud App ID or Server Secret is missing.");
-        return;
+        const APP_ID = 293628284;
+        const SERVER_SECRET = process.env.NEXT_PUBLIC_ZEGO_SERVER_SECRET || "7ef5ad0e5bb3b97fb13ff842d1122837";
+
+        if (!APP_ID || !SERVER_SECRET) {
+          console.error("ZegoCloud App ID or Server Secret is missing.");
+          return;
+        }
+
+        const storedUserID = localStorage.getItem('userID');
+        const userID = storedUserID || userName.replace(/\s/g, '_').toLowerCase() + `_${Date.now()}`;
+        localStorage.setItem('userID', userID);
+        setUserId(userID);
+
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+          APP_ID,
+          SERVER_SECRET,
+          roomID,
+          userID,
+          userName
+        );
+
+        const zp = ZegoUIKitPrebuilt.create(kitToken);
+        zpRef.current = zp;
+
+        zp.joinRoom({
+          container: containerRef.current,
+          scenario: { mode: ZegoUIKitPrebuilt.GroupCall },
+          showScreenSharingButton: true,
+          showTextChat: true,
+          showUserList: true,
+          onLeaveRoom: () => onLeaveRef.current(),
+          sharedLinks: [{
+            name: 'Copy room link',
+            url: window.location.href,
+          }]
+        });
+
+        // Initialize companion data for avatar
+        setTimeout(async () => {
+          try {
+            const selectedCompanion = localStorage.getItem('selectedCompanion') || 'companion-1-luna';
+            setCompanionId(selectedCompanion);
+            
+            // Set companion name and subject based on companion
+            const companionData: { [key: string]: { name: string; subject: string } } = {
+              'companion-1-luna': { name: 'Luna', subject: 'Mindfulness & History' },
+              'companion-2-rex': { name: 'Rex', subject: 'Science & Health' },
+              'companion-3-nova': { name: 'Nova', subject: 'Technology & Programming' }
+            };
+            
+            const data = companionData[selectedCompanion] || companionData['companion-1-luna'];
+            setCompanionName(data.name);
+            setSubject(data.subject);
+            
+            console.log('Companion data initialized:', data);
+          } catch (error) {
+            console.error('Error initializing companion data:', error);
+          }
+        }, 1000);
+
+      } catch (error) {
+        console.error('Error initializing video call:', error);
       }
+    };
 
-      const storedUserID = localStorage.getItem('userID');
-      const userID = storedUserID || userName.replace(/\s/g, '_').toLowerCase() + `_${Date.now()}`;
-      localStorage.setItem('userID', userID);
-
-      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-        APP_ID,
-        SERVER_SECRET,
-        roomID,
-        userID,
-        userName
-      );
-
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
-      zpRef.current = zp;
-
-      zp.joinRoom({
-        container: containerRef.current,
-        scenario: { mode: ZegoUIKitPrebuilt.GroupCall },
-        showScreenSharingButton: true,
-        showTextChat: true,
-        showUserList: true,
-        onLeaveRoom: () => onLeaveRef.current(), // Use ref to avoid dependency issues
-        sharedLinks: [{
-          name: 'Copy room link',
-          url: window.location.href,
-        }]
-      });
-
-      // Spawn digital human AI after user joins (with delay to ensure room is ready)
-      setTimeout(() => {
-        spawnDigitalHuman(roomID);
-      }, 2000);
-    });
+    initializeVideoCall();
 
     // Cleanup function
     return () => {
@@ -123,9 +115,27 @@ function VideoCall({ userName, roomID, onLeave }: VideoCallProps) {
         zpRef.current = null;
       }
     };
-  }, [userName, roomID]); // Removed onLeave from dependencies
+  }, [userName, roomID]);
 
-  return <div ref={containerRef} style={{ width: '100vw', height: '100vh' }} />;
+  return (
+    <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
+      {/* Main video call container */}
+      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+      
+      
+      {/* D-ID Avatar */}
+      {companionName && companionId && subject && (
+        <DIDAvatar
+          companionId={companionId}
+          companionName={companionName}
+          subject={subject}
+          isVisible={showDIDAvatar}
+          onToggle={() => setShowDIDAvatar(!showDIDAvatar)}
+        />
+      )}
+      
+    </div>
+  );
 }
 
 export default function CallPage({ params }: { params: Promise<{ roomId: string }> }) {

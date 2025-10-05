@@ -1,0 +1,95 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .dashboardContainer {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 2rem;
+  }
+  
+  .nameInput {
+    padding: 0.8rem 1rem;
+    width: 300px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 2rem;
+  }
+  
+  .companionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+  
+  .companionCard {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: #fff;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .companionCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  }
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  .name {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+  }
+  
+  .callButton {
+    background-color: #ff6b81;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .callButton:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+  
+  .callButton:hover:not(:disabled) {
+    background-color: #ff4b61;
+  }
+  
