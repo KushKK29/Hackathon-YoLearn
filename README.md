@@ -28,7 +28,7 @@ Each companion is tailored to a specific domain, providing focused and immersive
 
 ---
 
-## ⚙️ Features
+##  Features
 
 -  **Multiple AI Companions:** Choose between Luna, Rex, and Nova based on your study goals.  
 -  **Real-Time Conversation:** Interact with companions through text and voice.  
