@@ -2,6 +2,11 @@
 
 An **AI-powered interactive learning platform** that connects users with three unique study companions — each specializing in different fields.  
 This project combines **AI, WebRTC communication, and realistic avatars** to create an engaging, voice-enabled study experience.
+---
+## 👥 Contributors
+
+| [<img src="https://github.com/KushKK29.png" width="100px;"/><br /><sub><b>Kush Goel</b></sub>](https://github.com/KushKK29) | [<img src="https://github.com/Shreeaansh-Goel.png" width="100px;"/><br /><sub><b>Shreeaansh Goel</b></sub>](https://github.com/Shreeaansh-Goel) |
+| :---: | :---: |
 
 ---
 ## 🎥 Project Demo
