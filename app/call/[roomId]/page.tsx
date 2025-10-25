@@ -116,11 +116,10 @@ function VideoCall({ userName, roomID, onLeave }: VideoCallProps) {
   }, [userName, roomID]);
 
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
       {/* Main video call container */}
-      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
-      
-      
+      <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+
       {/* D-ID Avatar */}
       {companionName && companionId && subject && (
         <DIDAvatar
@@ -131,7 +130,6 @@ function VideoCall({ userName, roomID, onLeave }: VideoCallProps) {
           onToggle={() => setShowDIDAvatar(!showDIDAvatar)}
         />
       )}
-      
     </div>
   );
 }

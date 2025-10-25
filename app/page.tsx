@@ -45,6 +45,23 @@ export default function DashboardPage() {
   const [userName, setUserName] = useState('');
   const router = useRouter();
 
+  const generateRandomRoomId = () => {
+    return 'room-' + Math.random().toString(36).substring(2, 9);
+  };
+
+  const handleRandomMeeting = () => {
+    if (!userName.trim()) {
+      alert('Please enter your name to start your session!');
+      return;
+    }
+
+    localStorage.setItem('userName', userName.trim());
+    localStorage.setItem('selectedCompanion', 'random');
+    
+    const randomRoomId = generateRandomRoomId();
+    router.push(`/call/${randomRoomId}`);
+  };
+
   const handleStartSession = (companionId: string) => {
     if (!userName.trim()) {
       alert('Please enter your name to start your study session!');
@@ -104,6 +121,28 @@ export default function DashboardPage() {
             autoComplete="off"
             data-form-type="other"
           />
+        </div>
+      </div>
+
+      {/* Quick Random Meeting Section */}
+      <div className="max-w-7xl w-full mb-12">
+        <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 text-white border border-white/10 hover:border-white/20 transition-all duration-300">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-4">Quick Random Meeting</h2>
+            <p className="text-gray-300 mb-6">
+              Start an instant meeting with a randomly generated room ID. Perfect for quick study sessions!
+            </p>
+            <button
+              onClick={handleRandomMeeting}
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/25 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-emerald-500 focus:ring-opacity-50"
+              suppressHydrationWarning={true}
+            >
+              <span className="flex items-center justify-center gap-2">
+                <span>Create Random Meeting</span>
+                <span>🎲</span>
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
